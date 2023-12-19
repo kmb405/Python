@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+<title>Checkerboard</title>
+<style>
+    .red {
+        background-color: {{color1}};
+    }
+
+    .black {
+        background-color: {{color2}};
+        color:{{color1}};
+    }
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<h1 class="black">***Checkerboard***</h1>
+
+{% for row in range(x) %}
+<div class="row">
+
+    {% for col in range(y) %}
+        {% if col % 2 == 0  and row % 2 == 0 %}
+            <div class="block black"></div>
+        {% elif col % 2 == 0 %}
+            <div class="block red"></div>
+        {% elif row % 2 == 0 %}
+            <div class="block red"></div>
+        {% else %}
+            <div class="block black"></div>
+        {% endif %}
+    {% endfor %}
+
+</div>
+{% endfor %}
+
+{% endblock %}

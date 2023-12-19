@@ -1,0 +1,27 @@
+insert into users (name, address)
+values( 'Matt Baldwin', 'matt@test.com'), 
+('Rowyn Baldwin','rowyn@test.com'),
+('Josh Baldwin','josh@test.com');
+
+
+select * from users;
+
+select * from users
+where address = 'matt@test.com';
+
+select * from users where id = '3';
+
+update users 
+set name = 'Josh pancakes'
+where id = 3;
+
+delete from users 
+where id = 2;
+
+SELECT *
+FROM users
+ORDER BY name ASC;
+
+SELECT *
+FROM users
+ORDER BY name DESC;

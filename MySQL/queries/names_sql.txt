@@ -1,0 +1,16 @@
+select name from names;
+
+insert into names (name)
+values ('Matt Baldwin'); 
+
+update names
+set name = 'Karl Baldwin'
+where id = 1;
+
+insert into names (name)
+values ('Noah Baldwin'), ('Andy Baldwin'), ('Rowyn Baldwin'), ('Molly Baldwin'); 
+
+delete from names 
+where id = 1;
+
+select name from names;

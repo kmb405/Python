@@ -1,0 +1,47 @@
+insert into dojos (name, created_at, updated_at)
+values ('one', NOW(), NOW()),('two',NOW(),NOW()), ('three',NOW(),NOW());
+
+
+delete from dojos 
+where id < 4;
+
+insert into dojos (name, created_at, updated_at)
+values ('one', NOW(), NOW()),('two',NOW(),NOW()), ('three',NOW(),NOW());
+
+insert into ninjas (first_name, last_name, age, dojo_id, created_at, updated_at)
+values ('Matt', 'Baldwin', '30', (select id from dojos where id = 7), NOW(), NOW()),
+('Josh', 'Baldwin','25', (select id from dojos where id = 7), NOW(),NOW()), 
+('Noah', 'Baldwin', '20', (select id from dojos where id = 7),NOW(),NOW());
+
+insert into ninjas (first_name, last_name, age, dojo_id, created_at, updated_at)
+values ('Molly', 'Baldwin', '30', (select id from dojos where id = 8), NOW(), NOW()),
+('Rowyn', 'Baldwin','25', (select id from dojos where id = 8), NOW(),NOW()), 
+('Andy', 'Baldwin', '20', (select id from dojos where id = 8),NOW(),NOW());
+
+insert into ninjas (first_name, last_name, age, dojo_id, created_at, updated_at)
+values ('Ann', 'Winstanley', '30', (select id from dojos where id = 9), NOW(), NOW()),
+('Danny', 'Winstanley','25', (select id from dojos where id = 9), NOW(),NOW()), 
+('Mark', 'Winstanley', '20', (select id from dojos where id = 9),NOW(),NOW());
+
+select * from ninjas 
+where dojo_id = 7;
+
+select * from ninjas 
+where dojo_id = 9;
+
+select * from ninjas 
+where dojo_id = 9 and id = 12 ;
+
+select dojos.name
+from dojos 
+join ninjas on ninjas.dojo_id = dojos.id
+where ninjas.id = 12;
+
+select *
+from dojos 
+join ninjas on ninjas.dojo_id = dojos.id
+where ninjas.id = 6;
+
+select *
+from dojos 
+join ninjas on ninjas.dojo_id = dojos.id;

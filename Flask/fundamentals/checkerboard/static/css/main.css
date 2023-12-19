@@ -1,0 +1,32 @@
+* {
+    font-family: sans-serif;
+    justify-content: center;
+}
+
+h1 {
+    justify-content: center;
+    text-align: center;
+    width: 500px;
+    margin-left: 700px;
+    margin-bottom: 40px;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.block {
+    height: 50px;
+    width: 50px;
+}
+
+.black {
+    background-color: black;
+    color: red;
+}
+
+.red {
+    background-color: red;
+}
