@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chart Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="generator">
+    <h1>Chart Generator</h1>
+    <select id="chart-type">
+      <option value="line">Line Chart</option>
+      <option value="bar">Bar Chart</option>
+      <option value="pie">Pie Chart</option>
+      </select>
+
+    <textarea id="dataset" placeholder="Enter dataset (comma-separated values)"></textarea>
+    <textarea id="labels" placeholder="Enter labels (comma-separated values)"></textarea>
+    <input type="color" id="color-scheme" value="#007bff">
+    <button id="generate-button">Generate Chart</button>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body class="container-fluid d-flex justify-content-center">
+    <div class="col-3 m-3 p-5 bg-dark text-light">
+        <h1 class="text-warning">Dojo Survey</h1>
+        <form action="/process" method="post">
+            <label for="name">Name:</label>
+            <br>
+            <input class="container-fluid" type="text" name="name">
+            <br>
+            <label class="my-4" for="location">Dojo Location:</label>
+            <br>
+            <input type="radio" value="San Jose" name="location">
+            <label for="San Jose" >San Jose</label>
+            <br>
+            <input type="radio" value="Chicago" name="location">
+            <label for="Chicago" >Chicago</label>
+            <br>
+            <input type="radio" value="New York" name="location">
+            <label for="New York" >New York</label>
+            <br>
+            <input type="radio" value="San Antonio" name="location">
+            <label for="San Antonio">San Antonio</label>
+            <br>
+            <label class="my-4" for="language">Favorite Language:</label>
+            <br>
+            <input type="checkbox" id="lang1" name="language" value="Python">
+            <label for="lang1"> Python</label><br>
+            <input type="checkbox" id="lang2" name="language" value="Java">
+            <label for="lang2">Java</label><br>
+            <input type="checkbox" id="lang3" name="language" value="Javascript">
+            <label for="lang3">Javascript</label><br>
+            <label class="my-4" for="comments">Comments (optional):</label>
+            <br>
+            <input type="text" style="height: 100px; width: 370px" name="comments">
+            <br>
+            <input class="my-4" type="submit" name="submit" id="submit">
+        </form>
+    </div>
+</body>
+</html>

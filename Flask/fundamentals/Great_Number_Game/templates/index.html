@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body class="container-fluid text-center">
+    <h1 class="col-12 mx-auto">Welcome to the Great Number Game!</h1>
+    <p class="col-12 my-2 mx-auto">I am thinking of a number between 1 and 100</p>
+    <div class="rounded col-2 my-1 mx-auto text-warning ">
+    {% if session.count > 4 %}
+        <div class="rounded p-5 mx-auto bg-success text-center">
+            <p >You Lose! Too Many Tries!</p>
+            <p>{{session['number']}} was the number!</p>
+            <form action="/newgame">
+                <input type="submit" name="reset" value="Again!" class="m-3 rounded bg-light">
+            </form>
+        </div>
+    {% elif session['ans'] == 'Too High' or session['ans'] == 'Too Low' %}
+        <p class="rounded p-5 mx-auto bg-danger">{{session['ans']}}</p>
+        </div>
+        <form action="form" method="post" class="rounded col-2 mx-auto p-3 bg-dark text-warning ">
+            <label for="guess">Take a guess!</label><br>
+            <input type="text" name="guess"><br>
+            <input type="submit"  class="m-3 rounded bg-warning">
+        </form>
+    {% elif session['ans'] == "You Win" %}
+        <div class="rounded p-5 mx-auto bg-success text-center">
+            <p >{{session['ans']}} it took {{session.count}} tries!</p>
+            <p>{{session['number']}} was the number!</p>
+            <form action="/newgame">
+                <input type="submit" name="reset" value="Again!" class="m-3 rounded bg-light">
+            </form>
+            <form action="save" method="post">
+                <label for="leaders"></label>
+                <input type="text" name="name">
+                <input type="submit" name="leaders" value="Save" class="m-3 rounded bg-light">
+            </form>
+        </div>
+    {% else %}
+        </div>
+        <form action="form" method="post" class="rounded col-2 mx-auto p-3 bg-dark text-warning ">
+            <label for="guess">Take a guess!</label><br>
+            <input type="text" name="guess"><br>
+            <input type="submit"  class="m-3 rounded bg-warning">
+        </form>
+    {% endif %}
+        <p class="col-12 my-5 mx-auto">{{session['number']}}</p>
+</body>
+</html>

@@ -1,0 +1,16 @@
+OperationalError
+pymysql.err.OperationalError: (1049, "Unknown database 'first_flask'")
+
+Traceback (most recent call last)
+
+Didn't create database first. 
+
+OperationalError
+pymysql.err.OperationalError: (1049, "Unknown database 'first_flas'")
+
+changed the name of db call
+
+AttributeError
+AttributeError: 'list' object has no attribute 'first_name'
+
+asked for friend firstname but didn't specify an index
