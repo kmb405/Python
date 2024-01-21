@@ -1,34 +1,54 @@
-from flask import render_template, session, redirect, request
+from flask import render_template, session, redirect, request, flash
 from flask_app import app
 from flask_app.models.user import User
-
+from flask_bcrypt import Bcrypt
+bcrypt = Bcrypt(app)
 
 @app.route('/')
 def login():
     return render_template('login.html')
 
-@app.route('/dashboard')
-def dashboard():
-    return render_template('dashboard.html')
+@app.route('/dashboard/<int:id>')
+def dashboard(id):
+    if session['id'] == id and session['logged_in'] == True:
+        return render_template('dashboard.html')
+    else:
+        return redirect('/')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect("/")
 
 @app.route('/register_user', methods=['POST'])
 def register():
-    session['first_name'] = request.form['first_name']
-    session['last_name'] = request.form['last_name']
-    session['email'] = request.form['email']
-    session['password'] = request.form['password']
-    # if not User.validate_user(request.form):
-    #     return redirect('/')
-    User.create_user(request.form)
+    data = {
+    'first_name': request.form['first_name'],
+    'last_name': request.form['last_name'],
+    'email': request.form['email'],
+    'password': bcrypt.generate_password_hash(request.form['password']),
+    }
+    user = User.get_one_user(request.form['email'])
+    if user:
+        flash('Email already in use.', 'register')
+        return redirect('/')
+    if not User.validate_register(request.form):
+        return redirect('/')
+    User.create_user(data)
     return redirect('/')
 
 @app.route('/login_user', methods=['POST'])
 def login_user():
-    # if not User.validate_user(request.form):
-    #     return redirect('/')
     user = User.get_one_user(request.form['email'])
-    session['first_name'] == user.first_name
-    if user.email == request.form['email'] and user.password == request.form['password']:
-        return redirect('/dashboard')
+    if user:
+        if bcrypt.check_password_hash(user.password, request.form['password']):
+            session['id'] = user.id
+            session['first_name'] = user.first_name
+            session['logged_in'] = True
+            return redirect(f'/dashboard/{user.id}')
+        else:
+            flash('Invalid Email/Password', 'login')
+            return redirect('/')
     else:
+        flash('Invalid Email/Password', 'login')
         return redirect('/')

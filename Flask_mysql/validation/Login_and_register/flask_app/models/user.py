@@ -2,6 +2,7 @@ from flask_app.config.my_db_connection import connecttoMySQL
 from flask import flash
 import re
 
+PASSWORD_REGEX = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 
 class User:
@@ -17,20 +18,23 @@ class User:
         self.updated_at = data['updated_at']
 
     @staticmethod
-    def validate_user(user):
+    def validate_register(user):
         is_valid = True
         # check validity
         if len(user['first_name']) < 3:
-            flash("First name must be longer than 2 Characters")
+            flash("First name must be longer than 2 Characters", 'register')
             is_valid = False
-        if len(user['first_name']) < 3:
-            flash("Last name must be longer than 2 Characters")
+        if len(user['last_name']) < 3:
+            flash("Last name must be longer than 2 Characters", 'register')
             is_valid = False
-        if len(user['password']) < 3:
-            flash('Password must be longer than 2 Characters')
+        if not PASSWORD_REGEX.match(user['password']):
+            flash('Password must be longer than 8 Characters, have a Uppercase Number, Lowercase Number, number, and special character', 'register')
             is_valid = False
-        if not user['email'] in EMAIL_REGEX:
-            flash('Please enter a valid email')
+        if user['password'] != user['confirm_password']:
+            flash('Passwords must match', 'register')
+            is_valid = False
+        if not EMAIL_REGEX.match(user['email']): 
+            flash("Invalid email address!", 'register')
             is_valid = False
         return is_valid
 
@@ -49,6 +53,8 @@ class User:
         data = {'email': email}
         query = 'SELECT * FROM users WHERE email=%(email)s;'
         results =  connecttoMySQL(cls.DB).query_db(query, data)
+        if len(results) < 1:
+            return False
         return cls(results[0])
     
     @classmethod
