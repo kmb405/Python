@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body class="container d-flex justify-content-center flex-column p-5">
+    <div class="d-flex justify-content-between align-items-end">
+        <div>
+            <h1>Welcome, {{session.first_name}}</h1>
+            <h3>All posted recipes:</h3>
+        </div>
+        <div>
+            <a href="/recipes/new" class="p-5">+ Create</a>
+            <a href="/logout">logout</a>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center p-5">
+        <table class="table">
+            <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Under 30</th>
+                <th class="text-center">Posted By</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            {% for recipe in recipes %}
+            <tr>
+                <td class="text-center">{{recipe.name}}</td>
+                <td class="text-center">{{recipe.under_30}}</td>
+                <td class="text-center">{{recipe.user.first_name}}</td>
+                <td class="text-center">
+                    <a href="/recipe/{{id}}" class="p-2">view recipe</a>
+                    <a href="/recipe/edit/{{id}}" class="p-2">edit</a>
+                    <a href="/recipe/delete/{{id}}" class="p-2">delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
