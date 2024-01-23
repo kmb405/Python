@@ -11,7 +11,7 @@
     <div>
         <div>
             <h1>Edit Recipe!</h1>
-            <a href="/recipes">back to recipes</a>
+            <a href="/recipes/{{session.id}}">back to recipes</a>
             <a href="/logout">logout</a>
         </div>
         <div>
@@ -28,8 +28,11 @@
                     <label for="created_at">Date Cooked/Made:</label>
                     <input type="date" id="created_at" name="created_at">
                     <label for="under_30">Under 30 Minutes?</label>
-                    <input type="radio" name="under_30" id="under_30" value="Yes">
-                    <input type="radio" name="under_30" id="under_30" value="No">
+                    <input type="radio" name="under_30" id="under_30" value="1">
+                    <input type="radio" name="under_30" id="under_30" value="0">
+                    <input type="hidden" value="{{recipe_id}}" name="recipe_id">
+                    <input type="hidden" value="{{user_id}}" name="user_id">
+                    <input type="submit">
                 </div>
             </form>
         </div>

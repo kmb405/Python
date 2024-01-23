@@ -7,20 +7,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-<body class="container d-flex justify-content-center flex-column p-5">
+<body class="container d-flex justify-content-center flex-column w-50 p-5">
     <div class="d-flex justify-content-between align-items-end">
         <div>
             <h1>Welcome, {{session.first_name}}</h1>
             <h3>All posted recipes:</h3>
         </div>
         <div>
-            <a href="/recipes/new" class="p-5">+ Create</a>
+            <a href="/recipes/new/{{user_id}}" class="p-5">+ Create</a>
             <a href="/logout">logout</a>
         </div>
     </div>
-    <div class="d-flex justify-content-center p-5">
-        <table class="table">
-            <tr>
+    <div class="d-flex justify-content-center">
+        <table class="table table-striped">
+            <tr class="">
                 <th class="text-center">Name</th>
                 <th class="text-center">Under 30</th>
                 <th class="text-center">Posted By</th>
@@ -29,12 +29,20 @@
             {% for recipe in recipes %}
             <tr>
                 <td class="text-center">{{recipe.name}}</td>
-                <td class="text-center">{{recipe.under_30}}</td>
-                <td class="text-center">{{recipe.user.first_name}}</td>
+                {% if recipe.under_30 == 1: %}
+                <td class="text-center">Yes</td>
+                {% elif recipe.under_30 == 0: %}
+                <td class="text-center">No</td>
+                {% endif %}
+                <td class="text-center">{{recipe.first_name}}</td>
                 <td class="text-center">
-                    <a href="/recipe/{{id}}" class="p-2">view recipe</a>
-                    <a href="/recipe/edit/{{id}}" class="p-2">edit</a>
-                    <a href="/recipe/delete/{{id}}" class="p-2">delete</a>
+                    {% if recipe.user_id == session.id %}
+                    <a href="/recipe/{{recipe.id}}" class="p-2">view recipe</a>
+                    <a href="/recipe/edit/{{recipe.id}}/{{user_id}}" class="p-2">edit</a>
+                    <a href="/recipe/delete/{{recipe.id}}" class="p-2">delete</a>
+                    {% else %}
+                    <a href="/recipe/{{recipe.id}}" class="p-2">view recipe</a>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
