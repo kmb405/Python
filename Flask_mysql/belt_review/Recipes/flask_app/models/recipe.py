@@ -33,7 +33,7 @@ class Recipe:
 
     @classmethod
     def get_all_recipes(cls):
-        query = 'SELECT * FROM recipes;'
+        query = 'SELECT * FROM recipes JOIN users ON recipes.user_id=users.id;'
         result = connecttoMySQL(cls.DB).query_db(query)
         recipes = []
         for recipe in result:
@@ -41,24 +41,23 @@ class Recipe:
         return recipes
     
     @classmethod
-    def get_one_user(cls, id):
-        data = {'id': id}
-        query = 'SELECT * FROM recipes WHERE id=%(id)s;'
+    def get_one_recipe(cls, recipe_id):
+        data = {'recipe_id': recipe_id}
+        query = 'SELECT * FROM recipes JOIN users ON recipes.user_id=users.id WHERE recipes.id=%(recipe_id)s;'
         results =  connecttoMySQL(cls.DB).query_db(query, data)
-        if len(results) < 1:
-            return False
-        return cls(results[0])
+        return results[0]
     
     @classmethod
-    def create_user(cls, data):
+    def create_recipe(cls, data):
         query = 'INSERT INTO recipes (name, user_id, under_30, description, instructions, created_at, updated_at) VALUES (%(name)s, %(user_id)s, %(under_30)s, %(description)s, %(instructions)s, NOW(), NOW());'
         results = connecttoMySQL(cls.DB).query_db(query, data)
         return results
     
     @classmethod
-    def update_user(cls, data):
-        query = 'UPDATE recipes SET name=%(name)s, user_id=%(user_id)s, under_30=%(under_30)s, description=%(description)s, instructions=%(instructions)s, updated_at=NOW() WHERE id=%(id)s;'
-        return connecttoMySQL(cls.DB).query_db(query, data)
+    def update_recipe(cls, data):
+        query = 'UPDATE recipes SET name=%(name)s, user_id=%(user_id)s, under_30=%(under_30)s, description=%(description)s, instructions=%(instructions)s, updated_at=NOW() WHERE id=%(recipe_id)s;'
+        results = connecttoMySQL(cls.DB).query_db(query, data)
+        return results
     
     @classmethod
     def delete_user(cls, id):
