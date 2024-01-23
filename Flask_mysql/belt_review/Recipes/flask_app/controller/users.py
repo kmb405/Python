@@ -1,12 +1,8 @@
-from flask import render_template, session, redirect, request, flash
+from flask import render_template, session, redirect, request, flash, url_for
 from flask_app import app
 from flask_app.models.user import User
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
-
-@app.route('/')
-def home():
-    return render_template('home.html')
 
 @app.route('/logout')
 def logout():
@@ -38,7 +34,7 @@ def login_user():
             session['id'] = user.id
             session['first_name'] = user.first_name
             session['logged_in'] = True
-            return redirect(recipes.main)
+            return redirect(f"/recipes/{session['id']}")
         else:
             flash('Invalid Email/Password', 'login')
             return redirect('/')
