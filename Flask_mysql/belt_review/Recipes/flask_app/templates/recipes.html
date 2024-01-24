@@ -14,7 +14,7 @@
             <h3>All posted recipes:</h3>
         </div>
         <div>
-            <a href="/recipes/new/{{user_id}}" class="p-5">+ Create</a>
+            <a href="/recipes/new/{{session['id']}}" class="p-5">+ Create</a>
             <a href="/logout">logout</a>
         </div>
     </div>
@@ -38,8 +38,8 @@
                 <td class="text-center">
                     {% if recipe.user_id == session.id %}
                     <a href="/recipe/{{recipe.id}}" class="p-2">view recipe</a>
-                    <a href="/recipe/edit/{{recipe.id}}/{{user_id}}" class="p-2">edit</a>
-                    <a href="/recipe/delete/{{recipe.id}}" class="p-2">delete</a>
+                    <a href="/recipe/edit/{{recipe.id}}/{{session['id']}}" class="p-2">edit</a>
+                    <a href="/delete_recipe/{{recipe.id}}" class="p-2">delete</a>
                     {% else %}
                     <a href="/recipe/{{recipe.id}}" class="p-2">view recipe</a>
                     {% endif %}

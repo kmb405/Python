@@ -19,15 +19,17 @@ class Recipe:
     def validate_recipe(recipe):
         is_valid = True
         # check validity
-        if len(recipe['name']) < 3:
+        if len(recipe['name']) < 4:
             flash("Name must be longer than 2 Characters", 'recipe')
             is_valid = False
-        if len(recipe['description']) < 10:
+        if len(recipe['description']) < 4:
             flash("Description cannot be blank", 'recipe')
             is_valid = False
-        if len(recipe['instructions']) < 10:
+        if len(recipe['instructions']) < 4:
             flash("Instructions cannot be blank", 'recipe')
             is_valid = False
+        if len(recipe['created_at']) < 10:
+            flash("Date cannot be blank", 'recipe')
         return is_valid
 
 
@@ -60,7 +62,7 @@ class Recipe:
         return results
     
     @classmethod
-    def delete_user(cls, id):
+    def delete_recipe(cls, id):
         query = 'DELETE from recipes WHERE id = %(id)s;'
         data = {'id': id}
         return connecttoMySQL(cls.DB).query_db(query,data)

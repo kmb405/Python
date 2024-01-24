@@ -9,11 +9,11 @@ bcrypt = Bcrypt(app)
 def home():
     return render_template('home.html')
 
-@app.route('/recipes/<int:user_id>')
-def recipes(user_id):
+@app.route('/recipes')
+def recipes():
     if session['id'] and session['logged_in'] == True:
         recipes = Recipe.get_all_recipes()
-        return render_template('recipes.html', recipes=recipes, user_id=user_id)
+        return render_template('recipes.html', recipes=recipes)
     else:
         return redirect('/')
 
@@ -28,7 +28,8 @@ def view_recipe(recipe_id):
 @app.route('/recipe/edit/<int:recipe_id>/<int:user_id>')
 def recipe(recipe_id, user_id):
     if session['id'] and session['logged_in'] == True:
-        return render_template('recipes_edit.html', recipe_id=recipe_id, user_id=user_id)
+        recipe = Recipe.get_one_recipe(recipe_id=recipe_id)
+        return render_template('recipes_edit.html', recipe=recipe, user_id=user_id)
     else:
         return redirect('/')
     
@@ -41,13 +42,26 @@ def create_recipe(user_id):
 
 @app.route('/new_recipe', methods=['POST'])
 def new_recipe():
-    id = request.form['user_id']
-    Recipe.create_recipe(request.form)
-    return redirect(f'recipes/{id}')
+    if not Recipe.validate_recipe(request.form):
+        print(request.form)
+        return redirect(f'/recipes/new/{request.form["user_id"]}')
+    else:
+        id = request.form['user_id']
+        Recipe.create_recipe(request.form)
+        return redirect(f'recipes')
 
 @app.route('/update_recipe', methods=['POST'])
 def update_recipe():
-    id = request.form['user_id']
-    print(request.form)
-    recipe_id = Recipe.update_recipe(request.form)
-    return redirect(f'recipes/{id}')
+    if not Recipe.validate_recipe(request.form):
+        print(request.form)
+        return redirect(f'/recipe/edit/{request.form["recipe_id"]}/{request.form["user_id"]}')
+    else:
+        id = request.form['user_id']
+        Recipe.update_recipe(request.form)
+        return redirect(f'recipes')
+    
+
+@app.route('/delete_recipe/<int:recipe_id>')
+def delete_recipe(recipe_id):
+    Recipe.delete_recipe(recipe_id)
+    return redirect('/recipes')
