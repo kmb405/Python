@@ -34,7 +34,7 @@ def login_user():
             session['id'] = user.id
             session['first_name'] = user.first_name
             session['logged_in'] = True
-            return redirect(f"/recipes")
+            return redirect(f"/rides")
         else:
             flash('Invalid Email/Password', 'login')
             return redirect('/')
